@@ -1,0 +1,73 @@
+# Функція для читання даних з файлу
+def read_students_data(filename):
+    students = []
+    with open(filename, 'r') as file:
+        for line in file:
+            # Розбиваємо кожен рядок на окремі поля
+            data = line.strip().split(',')
+            student = {
+                'StLastName': data[0].strip(),
+                'StFirstName': data[1].strip(),
+                'Grade': data[2].strip(),
+                'Classroom': data[3].strip(),
+                'Bus': data[4].strip(),
+                'TLastName': data[5].strip(),
+                'TFirstName': data[6].strip()
+            }
+            students.append(student)
+    return students
+
+
+# 1. Пошук за прізвищем студента
+def search_by_student_lastname(students, lastname):
+    result = [student for student in students if student['StLastName'].lower() == lastname.lower()]
+    return result
+
+
+# 2. Пошук за номером автобуса
+def search_by_bus_number(students, bus_number):
+    result = [student for student in students if student['Bus'] == str(bus_number)]
+    return result
+
+
+# 3. Пошук за прізвищем викладача
+def search_by_teacher_lastname(students, teacher_lastname):
+    result = [student for student in students if student['TLastName'].lower() == teacher_lastname.lower()]
+    return result
+
+
+# 4. Пошук за рівнем навчання
+def search_by_grade(students, grade):
+    result = [student for student in students if student['Grade'] == str(grade)]
+    return result
+
+
+# Основна функція
+def main():
+    filename = 'students.txt'  # Задайте шлях до вашого файлу
+    students = read_students_data(filename)
+
+    # Виведення результатів для тестування
+    lastname = input("Введіть прізвище студента для пошуку: ")
+    print("Результат пошуку за прізвищем студента:")
+    for student in search_by_student_lastname(students, lastname):
+        print(student)
+
+    bus_number = input("Введіть номер автобуса для пошуку: ")
+    print(f"Результат пошуку за автобусом {bus_number}:")
+    for student in search_by_bus_number(students, bus_number):
+        print(student)
+
+    teacher_lastname = input("Введіть прізвище викладача для пошуку: ")
+    print(f"Результат пошуку за прізвищем викладача {teacher_lastname}:")
+    for student in search_by_teacher_lastname(students, teacher_lastname):
+        print(student)
+
+    grade = input("Введіть рівень навчання (Grade) для пошуку: ")
+    print(f"Результат пошуку за рівнем навчання {grade}:")
+    for student in search_by_grade(students, grade):
+        print(student)
+
+
+if __name__ == '__main__':
+    main()
